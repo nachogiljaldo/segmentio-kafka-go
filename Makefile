@@ -7,7 +7,10 @@ stop-dev:
 	@docker-compose down -v --remove-orphans
 
 start-consumer:
-	@go run cmd/consumer/main.go
+	@OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://localhost:4317 go run cmd/consumer/main.go
+
+start-producer:
+	@OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://localhost:4317 go run cmd/producer/main.go
 
 build:
 	go build -o ${DEPLOY_DIR}/ ./cmd/*

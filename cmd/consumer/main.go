@@ -1,13 +1,18 @@
 package main
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/nachogiljaldo/segmentio-kafka/pkg/consumer"
+	"github.com/nachogiljaldo/segmentio-kafka/pkg/tracing"
 )
 
 func main() {
-	fmt.Printf("Running consumer")
+	fmt.Println("Running consumer")
+	ctx := context.Background()
+	close, _ := tracing.InitTraceExporter(ctx, "consumer")
+	defer close(ctx)
 	consumer, err := consumer.NewConsumer()
 	if err != nil {
 		panic(err)

@@ -23,7 +23,16 @@ services:
       KAFKA_CREATE_TOPICS: "test-topic:3:1"
     networks:
       - kafka-net
-
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    command: --collector.otlp.enabled=true
+    ports:
+      - '6831:6831/udp'
+      - '16686:16686'
+      - '5778:5778'
+      - '4317:4317'
+      - '4318:4318'
+      
 networks:
   kafka-net:
     driver: bridge
